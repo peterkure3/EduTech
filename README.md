@@ -1,2 +1,2 @@
 # EduTech
-CS Project 1
+An education platform that provides access to learning materials in local languages.
