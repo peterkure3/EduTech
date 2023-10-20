@@ -1,18 +1,15 @@
-// Import the Express framework
 const express = require('express');
-
-// Create an instance of the Express application
 const app = express();
+const port = process.env.PORT || 3000;
+const userRoutes = require('./routes/userRoutes');
 
-// Define a route that responds with "Hello, World!"
-app.get('/', (req, res) => {
-  res.send('Hello, World!');
-});
+// Middleware for JSON parsing
+app.use(express.json());
 
-// Define the port to listen on (e.g., 3000)
-const port = 3000;
+// Use the user registration routes
+app.use('/api/users', userRoutes);
 
 // Start the server
 app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(`Server is running on port ${port}`);
 });
