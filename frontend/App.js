@@ -5,7 +5,6 @@ import { View, Button, Text, SafeAreaView } from 'react-native';
 import Parse from 'parse/react-native.js';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-
 //Initializing the SDK
 Parse.setAsyncStorage(AsyncStorage);
 //Paste below the Back4App Application ID AND the JavaScript KEY
@@ -51,11 +50,11 @@ const App = () => {
   return (
     <SafeAreaView>
       <View>
-        <Text>Name: {person.get('name')}</Text>
-        <Text>email: {person.get('email')}</Text>
+        <Text>hello World</Text>
+        {/* <Text>email: {person.get('email')}</Text>
         <Button title='Add person' onPress={addPerson} />
         <Button title='Fetch person' onPress={fetchPerson} />
-        {/* Your other components here ....*/}
+        Your other components here .... */}
       </View>
     </SafeAreaView>
   )
