@@ -5,7 +5,7 @@ FROM node:18
 WORKDIR /frontend
 
 # Copy the application files into the working directory
-COPY . /frontend/
+COPY . /frontend
 
 # Install the application dependencies
 RUN npm install
