@@ -50,7 +50,7 @@ const App = () => {
   return (
     <SafeAreaView>
       <View>
-        <Text>hello World</Text>
+      <Text style={{ textAlign: 'center', fontSize: 24, fontWeight: 'bold', marginTop:400, }}>Hello World</Text>
         {/* <Text>email: {person.get('email')}</Text>
         <Button title='Add person' onPress={addPerson} />
         <Button title='Fetch person' onPress={fetchPerson} />
