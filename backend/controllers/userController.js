@@ -2,6 +2,7 @@ const userModel = require('../models/userModel');
 
 async function registerUser(req, res) {
   try {
+    console.log(req.body)
     const { username, email, password } = req.body;
 
     // Input validation
@@ -20,4 +21,20 @@ async function registerUser(req, res) {
   }
 }
 
-module.exports = { registerUser };
+async function getUsers(req, res) {
+  try {
+    const users = await userModel.getAllUsers(); // Define this function in your userModel
+    res.status(200).json(users);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to retrieve users' });
+  }
+}
+
+module.exports = {
+  registerUser,
+  getUsers,
+};
+
+
+
