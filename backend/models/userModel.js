@@ -29,5 +29,5 @@ async function getAllUsers() {
 //   })
 // }
 
-module.exports = { createUser };
+module.exports = { createUser, getAllUsers };
 
