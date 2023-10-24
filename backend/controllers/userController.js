@@ -6,7 +6,7 @@ async function registerUser(req, res) {
 
     // Input validation
     if (!username || !email || !password) {
-      return res.status(400).json({ error: 'Missing username, email, or password' });
+      return res.status(400).json({ error: 'Missing username, email, or passwords' });
     }
 
     // You can add additional validation checks here if needed
