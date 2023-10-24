@@ -1,5 +1,7 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, useColorScheme  } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, useColorScheme } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
+
 const CustomButton = ({ title, onPress }) => {
     return (
         <TouchableOpacity style={styles.button} onPress={onPress}>
@@ -24,11 +26,27 @@ const HomeScreen = ({ navigation }) => {
     const themeContainerStyle =
         colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
     return (
-        <View style={[styles.container, themeContainerStyle]}>
-            <Text style={[styles.title,themeTextStyle]}>Edutech</Text>
-            <Text style={[styles.text, themeTextStyle]}>Grow your education and level up with Edutech.</Text>
-            <CustomButton title="Get Started" onPress={handleSignUpNavigation} />
-        </View>
+        <LinearGradient
+            colors={['purple', 'blue']}
+            start={{
+                x: 0,
+                y: 0
+            }}
+            end={{
+                x: 1,
+                y: 1
+            }}
+            style={[styles.container, themeContainerStyle]}
+        >
+            <View style={styles.container}>
+
+                <Text style={[styles.title, themeTextStyle]}>Edutech</Text>
+                <Text style={[styles.text, themeTextStyle]}>Grow your education and level up with Edutech.</Text>
+
+
+                <CustomButton title="Get Started" onPress={handleSignUpNavigation} />
+            </View>
+        </LinearGradient>
     );
 };
 
@@ -38,6 +56,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         padding: 16,
+        width: '100%',
     },
     title: {
         fontSize: 24,
@@ -48,14 +67,15 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
     button: {
-        backgroundColor: 'black',
+        backgroundColor: 'white',
         paddingVertical: 10,
         paddingHorizontal: 20,
         borderRadius: 24,
     },
     buttonText: {
-        color: 'white',
-        fontSize: 18,
+        color: 'purple',
+        fontSize: 20,
+        fontWeight: 'bold'
     },
     lightContainer: {
         backgroundColor: '#d0d0c0',

@@ -1,3 +1,4 @@
+import { LinearGradient } from 'expo-linear-gradient';
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text } from 'react-native';
 
@@ -16,6 +17,18 @@ const SignupPage = ({ navigation }) => {
     };
 
     return (
+        <LinearGradient
+            colors={['blue', 'purple']}
+            start={{
+                x: 0,
+                y: 0
+            }}
+            end={{
+                x: 1,
+                y: 1
+            }}
+            style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+        >
         <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
             <Text>Edutech</Text>
             <Text>Login</Text>
@@ -27,6 +40,9 @@ const SignupPage = ({ navigation }) => {
                     borderWidth: 1,
                     marginBottom: 10,
                     paddingLeft: 10,
+                    color: 'gray', // Make the text color gray
+                    borderRadius: 24,
+                    backgroundColor: 'white'
                 }}
                 placeholder="First Name"
                 value={firstName}
@@ -40,6 +56,9 @@ const SignupPage = ({ navigation }) => {
                     borderWidth: 1,
                     marginBottom: 10,
                     paddingLeft: 10,
+                    color: 'gray', // Make the text color gray
+                    borderRadius: 24,
+                    backgroundColor: 'white'
                 }}
                 placeholder="Last Name"
                 value={lastName}
@@ -53,6 +72,9 @@ const SignupPage = ({ navigation }) => {
                     borderWidth: 1,
                     marginBottom: 10,
                     paddingLeft: 10,
+                    color: 'gray', // Make the text color gray
+                    borderRadius: 24,
+                    backgroundColor: 'white'
                 }}
                 placeholder="Email"
                 value={email}
@@ -66,6 +88,9 @@ const SignupPage = ({ navigation }) => {
                     borderWidth: 1,
                     marginBottom: 10,
                     paddingLeft: 10,
+                    color: 'gray', // Make the text color gray
+                    borderRadius: 24,
+                    backgroundColor: 'white'
                 }}
                 placeholder="Confirm Email"
                 value={confirmEmail}
@@ -79,6 +104,9 @@ const SignupPage = ({ navigation }) => {
                     borderWidth: 1,
                     marginBottom: 10,
                     paddingLeft: 10,
+                    color: 'gray', // Make the text color gray
+                    borderRadius: 24,
+                    backgroundColor: 'white'
                 }}
                 placeholder="Password"
                 secureTextEntry={true}
@@ -93,6 +121,9 @@ const SignupPage = ({ navigation }) => {
                     borderWidth: 1,
                     marginBottom: 20,
                     paddingLeft: 10,
+                    color: 'gray', // Make the text color gray
+                    borderRadius: 24,
+                    backgroundColor: 'white'
                 }}
                 placeholder="Confirm Password"
                 secureTextEntry={true}
@@ -113,8 +144,9 @@ const SignupPage = ({ navigation }) => {
             >
                 <Text style={{ color: 'white', fontSize: 18 }}>Sign Up</Text>
             </TouchableOpacity>
-
         </View>
+        </LinearGradient>
+
     );
 };
 

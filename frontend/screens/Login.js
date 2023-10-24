@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { View, TextInput, TouchableOpacity, Text } from 'react-native';
+import { LinearGradient } from 'expo-linear-gradient';
 
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState('');
@@ -17,17 +18,34 @@ const LoginPage = ({ navigation }) => {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-      <Text>Edutech</Text>
-      <Text>Login</Text>
+    <LinearGradient
+      colors={['blue', 'purple']}
+      start={{
+        x: 0,
+        y: 0
+      }}
+      end={{
+        x: 1,
+        y: 1
+      }}
+      style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
+    >
+      <View style={{ alignItems: 'center', marginBottom: 20 }}>
+        <Text style={{ color: 'white', fontSize: 24 }}>Edutech</Text>
+        <Text style={{ color: 'white', fontSize: 18 }}>Login</Text>
+      
+
       <TextInput
         style={{
-          width: '80%',
+          width: '100%', // Take up 100% of the parent's width
           height: 40,
           borderColor: 'gray',
           borderWidth: 1,
           marginBottom: 10,
           paddingLeft: 10,
+          color: 'gray', // Make the text color gray
+          backgroundColor: 'white', // Added white background color
+          borderRadius: 24, // Added border radius
         }}
         placeholder="Email"
         value={email}
@@ -41,13 +59,15 @@ const LoginPage = ({ navigation }) => {
           borderWidth: 1,
           marginBottom: 20,
           paddingLeft: 10,
+          color: 'gray', // Make the text color gray
+          backgroundColor: 'white', // Added white background color
+          borderRadius: 24, // Added border radius
         }}
         placeholder="Password"
         secureTextEntry={true}
         value={password}
         onChangeText={(text) => setPassword(text)}
       />
-      <Text>Dont have an account? Register here</Text>
       <TouchableOpacity
         style={{
           backgroundColor: 'orange',
@@ -61,6 +81,8 @@ const LoginPage = ({ navigation }) => {
       >
         <Text style={{ color: 'white', fontSize: 18 }}>Login</Text>
       </TouchableOpacity>
+      <Text style={{ color: 'white' }}>Don't have an account? Register here</Text>
+
       <TouchableOpacity
         style={{
           backgroundColor: 'red',
@@ -73,7 +95,8 @@ const LoginPage = ({ navigation }) => {
       >
         <Text style={{ color: 'white', fontSize: 18 }}>Login with Google</Text>
       </TouchableOpacity>
-    </View>
+      </View>
+    </LinearGradient>
   );
 };
 
