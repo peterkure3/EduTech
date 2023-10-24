@@ -1,27 +1,55 @@
-import React, { useEffect, useState } from 'react';
-import { View, Button, Text, SafeAreaView } from 'react-native';
+import React from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import HomeScreen from './screens/Home';
+import DetailScreen from './screens/Details';
+import ProfilePage from './screens/Profile';
+import LoginPage from './screens/Login';
+import SignupPage from './screens/Signup';
+import FeedScreen from './screens/Feed';
 
-// In a React Native application
-import Parse from 'parse/react-native.js';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
-//Initializing the SDK
-Parse.setAsyncStorage(AsyncStorage);
-//Paste below the Back4App Application ID AND the JavaScript KEY
-Parse.initialize('86LoMs38gTacRyWXbQGGixJoxtFIr4EOfAb6Ploq', '4EFDQLclVUaWyETFmHBGxaAD0F019m3FGOrJO8l7');
-//Point to Back4App Parse API address 
-Parse.serverURL = 'https://parseapi.back4app.com/';
+const Stack = createNativeStackNavigator();
 
-const App = () => {
-
+function App() {
+  
   return (
-    <SafeAreaView>
-      <View>
-      <Text style={{ textAlign: 'center', fontSize: 24, fontWeight: 'bold', marginTop:400, }}>Hello World</Text>
-      </View>
-    </SafeAreaView>
-  )
-
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen
+          name="Login"
+          component={LoginPage}
+          options={{ title: 'Login' }}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={SignupPage}
+          options={{ title: 'Sign Up' }}
+        />
+        <Stack.Screen
+          name="Home"
+          component={HomeScreen} 
+          options={{ title: 'Home' }} 
+        />
+        <Stack.Screen
+          name="Profile"
+          component={ProfilePage} 
+          options={{ title: 'Profile' }} 
+        />
+        <Stack.Screen
+          name="Details"
+          component={DetailScreen} 
+          options={{ title: 'Details' }} 
+        />
+        <Stack.Screen
+          name="Feed"
+          component={FeedScreen} 
+          options={{ title: 'Details' }} 
+        />
+        
+      </Stack.Navigator>
+    </NavigationContainer>
+  );
 }
 
 export default App;
