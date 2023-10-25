@@ -1,55 +1,38 @@
-import React from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import HomeScreen from './screens/Home';
-import DetailScreen from './screens/Details';
-import ProfilePage from './screens/Profile';
-import LoginPage from './screens/Login';
-import SignupPage from './screens/Signup';
-import FeedScreen from './screens/Feed';
+import React from 'react'
+import { Provider } from 'react-native-paper'
+import { NavigationContainer } from '@react-navigation/native'
+import { createStackNavigator } from '@react-navigation/stack'
+import { theme } from './core/theme'
+import {
+  StartScreen,
+  LoginScreen,
+  RegisterScreen,
+  ResetPasswordScreen,
+  Dashboard,
+} from './screens/login_siginup'
 
+const Stack = createStackNavigator()
 
-const Stack = createNativeStackNavigator();
-
-function App() {
-  
+export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
-        <Stack.Screen
-          name="Login"
-          component={LoginPage}
-          options={{ title: 'Login' }}
-        />
-        <Stack.Screen
-          name="Signup"
-          component={SignupPage}
-          options={{ title: 'Sign Up' }}
-        />
-        <Stack.Screen
-          name="Home"
-          component={HomeScreen} 
-          options={{ title: 'Home' }} 
-        />
-        <Stack.Screen
-          name="Profile"
-          component={ProfilePage} 
-          options={{ title: 'Profile' }} 
-        />
-        <Stack.Screen
-          name="Details"
-          component={DetailScreen} 
-          options={{ title: 'Details' }} 
-        />
-        <Stack.Screen
-          name="Feed"
-          component={FeedScreen} 
-          options={{ title: 'Details' }} 
-        />
-        
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
+    <Provider theme={theme}>
+      <NavigationContainer>
+        <Stack.Navigator
+          initialRouteName="StartScreen"
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="StartScreen" component={StartScreen} />
+          <Stack.Screen name="LoginScreen" component={LoginScreen} />
+          <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
+          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen
+            name="ResetPasswordScreen"
+            component={ResetPasswordScreen}
+          />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </Provider>
+  )
 }
-
-export default App;
