@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TextInput, TouchableOpacity, Text } from 'react-native';
+import { View, TextInput, TouchableOpacity, Text, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const LoginPage = ({ navigation }) => {
@@ -31,73 +31,81 @@ const LoginPage = ({ navigation }) => {
       style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}
     >
       <View style={{ alignItems: 'center', marginBottom: 20 }}>
+        <Image source={require('../assets/edutech_logo-removebg-preview.png')} style={styles.logo} />
         <Text style={{ color: 'white', fontSize: 24 }}>Edutech</Text>
         <Text style={{ color: 'white', fontSize: 18 }}>Login</Text>
-      
 
-      <TextInput
-        style={{
-          width: '100%', // Take up 100% of the parent's width
-          height: 40,
-          borderColor: 'gray',
-          borderWidth: 1,
-          marginBottom: 10,
-          paddingLeft: 10,
-          color: 'gray', // Make the text color gray
-          backgroundColor: 'white', // Added white background color
-          borderRadius: 24, // Added border radius
-        }}
-        placeholder="Email"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-      />
-      <TextInput
-        style={{
-          width: '80%',
-          height: 40,
-          borderColor: 'gray',
-          borderWidth: 1,
-          marginBottom: 20,
-          paddingLeft: 10,
-          color: 'gray', // Make the text color gray
-          backgroundColor: 'white', // Added white background color
-          borderRadius: 24, // Added border radius
-        }}
-        placeholder="Password"
-        secureTextEntry={true}
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-      />
-      <TouchableOpacity
-        style={{
-          backgroundColor: 'orange',
-          padding: 16,
-          paddingVertical: 10,
-          paddingHorizontal: 20,
-          borderRadius: 24,
-          marginBottom: 10,
-        }}
-        onPress={handleLogin}
-      >
-        <Text style={{ color: 'white', fontSize: 18 }}>Login</Text>
-      </TouchableOpacity>
-      <Text style={{ color: 'white' }}>Don't have an account? Register here</Text>
+        <TextInput
+          style={{
+            width: '100%', // Take up 100% of the parent's width
+            height: 40,
+            borderColor: 'gray',
+            borderWidth: 1,
+            marginBottom: 10,
+            paddingLeft: 10,
+            color: 'gray', // Make the text color gray
+            backgroundColor: 'white', // Added white background color
+            borderRadius: 24, // Added border radius
+          }}
+          placeholder="Email"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+        />
+        <TextInput
+          style={{
+            width: '80%',
+            height: 40,
+            borderColor: 'gray',
+            borderWidth: 1,
+            marginBottom: 20,
+            paddingLeft: 10,
+            color: 'gray', // Make the text color gray
+            backgroundColor: 'white', // Added white background color
+            borderRadius: 24, // Added border radius
+          }}
+          placeholder="Password"
+          secureTextEntry={true}
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+        />
+        <TouchableOpacity
+          style={{
+            backgroundColor: 'orange',
+            padding: 16,
+            paddingVertical: 10,
+            paddingHorizontal: 20,
+            borderRadius: 24,
+            marginBottom: 10,
+          }}
+          onPress={handleLogin}
+        >
+          <Text style={{ color: 'white', fontSize: 18 }}>Login</Text>
+        </TouchableOpacity>
+        <Text style={{ color: 'white' }}>Don't have an account? Register here</Text>
 
-      <TouchableOpacity
-        style={{
-          backgroundColor: 'red',
-          padding: 16,
-          paddingVertical: 10,
-          paddingHorizontal: 20,
-          borderRadius: 24,
-        }}
-        onPress={handleGoogleLogin}
-      >
-        <Text style={{ color: 'white', fontSize: 18 }}>Login with Google</Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            backgroundColor: 'red',
+            padding: 16,
+            paddingVertical: 10,
+            paddingHorizontal: 20,
+            borderRadius: 24,
+          }}
+          onPress={handleGoogleLogin}
+        >
+          <Text style={{ color: 'white', fontSize: 18 }}>Login with Google</Text>
+        </TouchableOpacity>
       </View>
     </LinearGradient>
   );
+};
+
+const styles = {
+  logo: {
+    width: 100, // Set the width of the logo
+    height: 100, // Set the height of the logo
+    marginBottom: 20,
+  },
 };
 
 export default LoginPage;
