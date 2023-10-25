@@ -18,6 +18,19 @@ async function getAllUsers() {
   }
 }
 
+async function loginUser(username, password) {
+  try {
+    const query = {
+      text: 'SELECT * FROM users WHERE username = $1 AND password = $2',
+      values: [username, password],
+    };
+    const { rows } = await pool.query(query);
+    return rows[0];
+  } catch (error) {
+    throw error;
+  }
+}
+
 // const createUser = (request, response) => {
 //   const { name, email, password } = request.body
 
@@ -29,5 +42,5 @@ async function getAllUsers() {
 //   })
 // }
 
-module.exports = { createUser, getAllUsers };
+module.exports = { createUser, getAllUsers, loginUser };
 
