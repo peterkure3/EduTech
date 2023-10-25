@@ -19,7 +19,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./assets/edutech_logo-removebg-preview.png",
         "backgroundColor": "#ffffff"
       }
     },
