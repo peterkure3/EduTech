@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, useColorScheme } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { LinearGradient } from 'expo-linear-gradient';
 
 const CustomButton = ({ title, onPress }) => {
@@ -11,20 +11,10 @@ const CustomButton = ({ title, onPress }) => {
 };
 
 const HomeScreen = ({ navigation }) => {
-    const handleLogout = () => {
-        // Add your logout logic here
-        // You may want to clear the user's session and navigate back to the login screen
-        navigation.navigate('Login');
-    };
-    const colorScheme = useColorScheme();
-
     const handleSignUpNavigation = () => {
-        navigation.navigate('Signup'); // Navigate to the "Signup" screen
+        navigation.navigate('Signup');
     };
 
-    const themeTextStyle = colorScheme === 'light' ? styles.lightThemeText : styles.darkThemeText;
-    const themeContainerStyle =
-        colorScheme === 'light' ? styles.lightContainer : styles.darkContainer;
     return (
         <LinearGradient
             colors={['purple', 'blue']}
@@ -36,14 +26,12 @@ const HomeScreen = ({ navigation }) => {
                 x: 1,
                 y: 1
             }}
-            style={[styles.container, themeContainerStyle]}
+            style={[styles.container]}
         >
             <View style={styles.container}>
-
-                <Text style={[styles.title, themeTextStyle]}>Edutech</Text>
-                <Text style={[styles.text, themeTextStyle]}>Grow your education and level up with Edutech.</Text>
-
-
+                <Image source={require('../assets/edutech_logo-removebg-preview.png')} style={styles.logo} />
+                <Text style={styles.title}>Edutech</Text>
+                <Text style={styles.text}>Grow your education and level up with Edutech.</Text>
                 <CustomButton title="Get Started" onPress={handleSignUpNavigation} />
             </View>
         </LinearGradient>
@@ -58,13 +46,20 @@ const styles = StyleSheet.create({
         padding: 16,
         width: '100%',
     },
+    logo: {
+        width: 100, // Set the width of the logo
+        height: 100, // Set the height of the logo
+        marginBottom: 20,
+    },
     title: {
         fontSize: 24,
         marginBottom: 20,
+        color: 'white', // Add color to the title
     },
     text: {
         fontSize: 16,
         marginBottom: 20,
+        color: 'white', // Add color to the text
     },
     button: {
         backgroundColor: 'white',
@@ -76,18 +71,6 @@ const styles = StyleSheet.create({
         color: 'purple',
         fontSize: 20,
         fontWeight: 'bold'
-    },
-    lightContainer: {
-        backgroundColor: '#d0d0c0',
-    },
-    darkContainer: {
-        backgroundColor: '#242c40',
-    },
-    lightThemeText: {
-        color: '#242c40',
-    },
-    darkThemeText: {
-        color: '#d0d0c0',
     },
 });
 
