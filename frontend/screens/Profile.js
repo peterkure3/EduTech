@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 
 const ProfilePage = ({ navigation }) => {
   const goToFeed = () => {
@@ -12,12 +12,16 @@ const ProfilePage = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <Image
+        source={require('../assets/profileImage.png')} // Replace with your image source
+        style={{ width: 150, height: 150, borderRadius: 75, marginBottom: 20 }}
+      />
       <Text style={{ fontSize: 24, marginBottom: 20 }}>User's Profile</Text>
       <TouchableOpacity
         style={{
           backgroundColor: 'blue',
           padding: 16,
-          borderRadius: 8,
+          borderRadius: 10,
           marginBottom: 20,
         }}
         onPress={goToFeed}

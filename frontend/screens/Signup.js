@@ -10,6 +10,9 @@ const SignupPage = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
 
+    const handleLoginNavigation=()=>{
+        navigation.navigate('Login');
+    }
     const handleSignup = () => {
         // Add your signup logic here
         console.log('Signing up with:', firstName, lastName, email, confirmEmail, password, confirmPassword);
@@ -31,11 +34,11 @@ const SignupPage = ({ navigation }) => {
         >
             <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                 <Image source={require('../assets/edutech_logo-removebg-preview.png')} style={styles.logo} />
-                <Text>Edutech</Text>
-                <Text>Login</Text>
+                <Text style={{ color: 'white', fontSize: 24, paddingBottom: 10 }}>Edutech</Text>
+                <Text style={{ color: 'white', fontSize: 18, paddingBottom: 10 }}>Sign Up</Text>
                 <TextInput
                     style={{
-                        width: '80%',
+                        width: '100%',
                         height: 40,
                         borderColor: 'gray',
                         borderWidth: 1,
@@ -51,7 +54,7 @@ const SignupPage = ({ navigation }) => {
                 />
                 <TextInput
                     style={{
-                        width: '80%',
+                        width: '100%',
                         height: 40,
                         borderColor: 'gray',
                         borderWidth: 1,
@@ -67,7 +70,7 @@ const SignupPage = ({ navigation }) => {
                 />
                 <TextInput
                     style={{
-                        width: '80%',
+                        width: '100%',
                         height: 40,
                         borderColor: 'gray',
                         borderWidth: 1,
@@ -83,7 +86,7 @@ const SignupPage = ({ navigation }) => {
                 />
                 <TextInput
                     style={{
-                        width: '80%',
+                        width: '100%',
                         height: 40,
                         borderColor: 'gray',
                         borderWidth: 1,
@@ -99,7 +102,7 @@ const SignupPage = ({ navigation }) => {
                 />
                 <TextInput
                     style={{
-                        width: '80%',
+                        width: '100%',
                         height: 40,
                         borderColor: 'gray',
                         borderWidth: 1,
@@ -116,7 +119,7 @@ const SignupPage = ({ navigation }) => {
                 />
                 <TextInput
                     style={{
-                        width: '80%',
+                        width: '100%',
                         height: 40,
                         borderColor: 'gray',
                         borderWidth: 1,
@@ -132,18 +135,23 @@ const SignupPage = ({ navigation }) => {
                     onChangeText={(text) => setConfirmPassword(text)}
                 />
 
-                <Text>Already have an account? Login here</Text>
+                <TouchableOpacity onPress={handleLoginNavigation}>
+                    <Text style={{ color: 'white', paddingBottom: 10 }}>Already have an account? Login here</Text>
+                </TouchableOpacity>
+
                 <TouchableOpacity
                     style={{
+                        width: '100%',
                         backgroundColor: 'orange',
                         padding: 16,
                         paddingVertical: 10,
                         paddingHorizontal: 20,
                         borderRadius: 24,
+                        alignItems: 'center'
                     }}
                     onPress={handleSignup}
                 >
-                    <Text style={{ color: 'white', fontSize: 18 }}>Sign Up</Text>
+                    <Text style={{ color: 'white', fontSize: 18, }}>Sign Up</Text>
                 </TouchableOpacity>
             </View>
         </LinearGradient>

@@ -5,7 +5,9 @@ import { LinearGradient } from 'expo-linear-gradient';
 const LoginPage = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const handleRegisterNavigation=()=>{
+    navigation.navigate('Signup')
+  }
   const handleLogin = () => {
     // Add your login logic here
     console.log('Logging in with:', email, password);
@@ -53,7 +55,7 @@ const LoginPage = ({ navigation }) => {
         />
         <TextInput
           style={{
-            width: '80%',
+            width: '100%',
             height: 40,
             borderColor: 'gray',
             borderWidth: 1,
@@ -70,6 +72,7 @@ const LoginPage = ({ navigation }) => {
         />
         <TouchableOpacity
           style={{
+            width:'100%',
             backgroundColor: 'orange',
             padding: 16,
             paddingVertical: 10,
@@ -81,10 +84,14 @@ const LoginPage = ({ navigation }) => {
         >
           <Text style={{ color: 'white', fontSize: 18 }}>Login</Text>
         </TouchableOpacity>
-        <Text style={{ color: 'white' }}>Don't have an account? Register here</Text>
-
+        <TouchableOpacity onPress={handleRegisterNavigation}>
+          <Text style={{ color: 'white', marginBottom: 10 }}>
+            Don't have an account? Register here
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity
           style={{
+            width:'100%',
             backgroundColor: 'red',
             padding: 16,
             paddingVertical: 10,

@@ -31,6 +31,7 @@ const HomeScreen = ({ navigation }) => {
             <View style={styles.container}>
                 <Image source={require('../assets/edutech_logo-removebg-preview.png')} style={styles.logo} />
                 <Text style={styles.title}>Edutech</Text>
+                <Image source={require('../assets/middleImage.png')} style={styles.infographic}/>
                 <Text style={styles.text}>Grow your education and level up with Edutech.</Text>
                 <CustomButton title="Get Started" onPress={handleSignUpNavigation} />
             </View>
@@ -49,6 +50,11 @@ const styles = StyleSheet.create({
     logo: {
         width: 100, // Set the width of the logo
         height: 100, // Set the height of the logo
+        marginBottom: 20,
+    },
+    infographic:{
+        width: 300,
+        height: 300,
         marginBottom: 20,
     },
     title: {
