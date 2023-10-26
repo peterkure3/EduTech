@@ -44,6 +44,7 @@ export default function RegisterScreen({ navigation }) {
 
       if (response.ok) {
         // Registration successful, you can navigate to a success screen or login screen
+        console.log("Signup successful");
         navigation.reset({
           index: 0,
           routes: [{ name: 'LoginScreen' }],

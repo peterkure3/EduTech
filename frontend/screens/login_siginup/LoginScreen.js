@@ -36,6 +36,7 @@ export default function LoginScreen({ navigation }) {
 
       if (response.ok) {
         // Login successful, navigates to the Dashboard screen
+        console.log("Login successful");
         navigation.reset({
           index: 0,
           routes: [{ name: 'Dashboard' }],
