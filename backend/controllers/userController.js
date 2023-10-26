@@ -32,9 +32,9 @@ async function getUsers(req, res) {
 }
 
 async function login(req, res) {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
   try {
-    const user = await userModel.loginUser(username, password);
+    const user = await userModel.loginUser(email, password);
     if (user) {
       res.status(200).json(user);
     } else {
