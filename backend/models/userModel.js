@@ -18,11 +18,11 @@ async function getAllUsers() {
   }
 }
 
-async function loginUser(email, password) {
+async function loginUser(username, password) {
   try {
     const query = {
       text: 'SELECT * FROM users WHERE username = $1 AND password = $2',
-      values: [email, password],
+      values: [username, password],
     };
     const { rows } = await pool.query(query);
     return rows[0];
