@@ -1,37 +1,64 @@
-import React, { useState } from 'react'
-import { View, StyleSheet, TouchableOpacity } from 'react-native'
-import { Text } from 'react-native-paper'
-import Background from '../../components/Background'
-import Logo from '../../components/Logo'
-import Header from '../../components/Header'
-import Button from '../../components/Button'
-import TextInput from '../../components/TextInput'
-import BackButton from '../../components/BackButton'
-import { theme } from '../../core/theme'
-import { emailValidator } from '../../helpers/emailValidator'
-import { passwordValidator } from '../../helpers/passwordValidator'
-import { usernameValidator } from '../../helpers/usernameValidator'
+import React, { useState } from 'react';
+import { View, StyleSheet, TouchableOpacity } from 'react-native';
+import { Text } from 'react-native-paper';
+import Background from '../../components/Background';
+import Logo from '../../components/Logo';
+import Header from '../../components/Header';
+import Button from '../../components/Button';
+import TextInput from '../../components/TextInput';
+import BackButton from '../../components/BackButton';
+import { theme } from '../../core/theme';
+import { emailValidator } from '../../helpers/emailValidator';
+import { passwordValidator } from '../../helpers/passwordValidator';
+import { usernameValidator } from '../../helpers/usernameValidator';
 
 export default function RegisterScreen({ navigation }) {
-  const [username, setUsername] = useState({ value: '', error: '' })
-  const [email, setEmail] = useState({ value: '', error: '' })
-  const [password, setPassword] = useState({ value: '', error: '' })
+  const [username, setUsername] = useState({ value: '', error: '' });
+  const [email, setEmail] = useState({ value: '', error: '' });
+  const [password, setPassword] = useState({ value: '', error: '' });
 
-  const onSignUpPressed = () => {
-    const usernameError = usernameValidator(username.value)
-    const emailError = emailValidator(email.value)
-    const passwordError = passwordValidator(password.value)
+  const onSignUpPressed = async () => {
+    const usernameError = usernameValidator(username.value);
+    const emailError = emailValidator(email.value);
+    const passwordError = passwordValidator(password.value);
     if (emailError || passwordError || usernameError) {
-      setUsername({ ...username, error: usernameError })
-      setEmail({ ...email, error: emailError })
-      setPassword({ ...password, error: passwordError })
-      return
+      setUsername({ ...username, error: usernameError });
+      setEmail({ ...email, error: emailError });
+      setPassword({ ...password, error: passwordError });
+      return;
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ username: 'Dashboard' }],
-    })
-  }
+
+    // API request for user registration
+    try {
+      const response = await fetch('https://edutech-api-av5t.onrender.com/api/users/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          username: username.value,
+          email: email.value,
+          password: password.value,
+        }),
+      });
+
+      if (response.ok) {
+        // Registration successful, you can navigate to a success screen or login screen
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'LoginScreen' }],
+        });
+      } else {
+        // Handle registration error, e.g., display an error message
+        const errorData = await response.json();
+        console.error('Registration failed:', errorData);
+        // You can set an error state here to display a message to the user
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+      // Handle network error, e.g., display a connection error message
+    }
+  };
 
   return (
     <Background>
@@ -42,7 +69,7 @@ export default function RegisterScreen({ navigation }) {
         label="Name"
         returnKeyType="next"
         value={username.value}
-        onChangeText={(text) => setName({ value: text, error: '' })}
+        onChangeText={(text) => setUsername({ value: text, error: '' })}
         error={!!username.error}
         errorText={username.error}
       />
@@ -67,11 +94,7 @@ export default function RegisterScreen({ navigation }) {
         errorText={password.error}
         secureTextEntry
       />
-      <Button
-        mode="contained"
-        onPress={onSignUpPressed}
-        style={{ marginTop: 24 }}
-      >
+      <Button mode="contained" onPress={onSignUpPressed} style={{ marginTop: 24 }}>
         Sign Up
       </Button>
       <View style={styles.row}>
@@ -81,7 +104,7 @@ export default function RegisterScreen({ navigation }) {
         </TouchableOpacity>
       </View>
     </Background>
-  )
+  );
 }
 
 const styles = StyleSheet.create({
@@ -93,4 +116,4 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: theme.colors.primary,
   },
-})
+});
