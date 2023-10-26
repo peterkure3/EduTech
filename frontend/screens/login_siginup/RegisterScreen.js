@@ -10,26 +10,26 @@ import BackButton from '../../components/BackButton'
 import { theme } from '../../core/theme'
 import { emailValidator } from '../../helpers/emailValidator'
 import { passwordValidator } from '../../helpers/passwordValidator'
-import { nameValidator } from '../../helpers/nameValidator'
+import { usernameValidator } from '../../helpers/usernameValidator'
 
 export default function RegisterScreen({ navigation }) {
-  const [name, setName] = useState({ value: '', error: '' })
+  const [username, setUsername] = useState({ value: '', error: '' })
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
 
   const onSignUpPressed = () => {
-    const nameError = nameValidator(name.value)
+    const usernameError = usernameValidator(username.value)
     const emailError = emailValidator(email.value)
     const passwordError = passwordValidator(password.value)
-    if (emailError || passwordError || nameError) {
-      setName({ ...name, error: nameError })
+    if (emailError || passwordError || usernameError) {
+      setUsername({ ...username, error: usernameError })
       setEmail({ ...email, error: emailError })
       setPassword({ ...password, error: passwordError })
       return
     }
     navigation.reset({
       index: 0,
-      routes: [{ name: 'Dashboard' }],
+      routes: [{ username: 'Dashboard' }],
     })
   }
 
@@ -41,10 +41,10 @@ export default function RegisterScreen({ navigation }) {
       <TextInput
         label="Name"
         returnKeyType="next"
-        value={name.value}
+        value={username.value}
         onChangeText={(text) => setName({ value: text, error: '' })}
-        error={!!name.error}
-        errorText={name.error}
+        error={!!username.error}
+        errorText={username.error}
       />
       <TextInput
         label="Email"
