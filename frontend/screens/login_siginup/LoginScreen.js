@@ -15,19 +15,42 @@ export default function LoginScreen({ navigation }) {
   const [email, setEmail] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
 
-  const onLoginPressed = () => {
-    const emailError = emailValidator(email.value)
-    const passwordError = passwordValidator(password.value)
+  const onLoginPressed = async () => {
+    const emailError = emailValidator(email.value);
+    const passwordError = passwordValidator(password.value);
     if (emailError || passwordError) {
-      setEmail({ ...email, error: emailError })
-      setPassword({ ...password, error: passwordError })
-      return
+      setEmail({ ...email, error: emailError });
+      setPassword({ ...password, error: passwordError });
+      return;
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Dashboard' }],
-    })
-  }
+
+    //API results for logining
+    try {
+      const response = await fetch('https://edutech-api-av5t.onrender.com/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email.value, password: password.value }),
+      });
+
+      if (response.ok) {
+        // Login successful, navigates to the Dashboard screen
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Dashboard' }],
+        });
+      } else {
+        // display an error message
+        const errorData = await response.json();
+        console.error('Login failed:', errorData);
+        
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+      // Handle network error
+    }
+  };
 
   return (
     <Background>
