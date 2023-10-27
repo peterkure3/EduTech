@@ -1,7 +1,5 @@
 # EduTech
 
-EduTechForAll is a project aimed at providing accessible and high-quality educational resources to learners of all ages. This repository contains the codebase for the project.
-
 ## Table of Contents
 
 - [Wireframe](#wireframe)
