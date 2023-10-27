@@ -13,6 +13,9 @@ app.use(cors());
 
 // Use the user registration routes
 app.use('/api/users', userRoutes);
+// app.get('/api/users',(req, res) => {
+//   res.json(users)
+// });
 
 // Start the server
 app.listen(port, () => {
