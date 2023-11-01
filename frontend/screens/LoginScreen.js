@@ -12,22 +12,46 @@ import { emailValidator } from '../helpers/emailValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
 
 export default function LoginScreen({ navigation }) {
-  const [email, setEmail] = useState({ value: '', error: '' })
+  const [username, setUsername] = useState({ value: '', error: '' })
   const [password, setPassword] = useState({ value: '', error: '' })
 
-  const onLoginPressed = () => {
-    const emailError = emailValidator(email.value)
-    const passwordError = passwordValidator(password.value)
-    if (emailError || passwordError) {
-      setEmail({ ...email, error: emailError })
-      setPassword({ ...password, error: passwordError })
-      return
+  const onLoginPressed = async () => {
+    const usernameError = usernameValidator(username.value);
+    const passwordError = passwordValidator(password.value);
+    if (usernameError || passwordError) {
+      setUsername({ ...username, error: usernameError });
+      setPassword({ ...password, error: passwordError });
+      return;
     }
-    navigation.reset({
-      index: 0,
-      routes: [{ name: 'Dashboard' }],
-    })
-  }
+
+    //API results for logining
+    try {
+      const response = await fetch('https://edutech-api-av5t.onrender.com/api/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username: username.value, password: password.value }),
+      });
+
+      if (response.ok) {
+        // Login successful, navigates to the Dashboard screen
+        console.log("Login successful");
+        navigation.reset({
+          index: 0,
+          routes: [{ name: 'Dashboard' }],
+        });
+      } else {
+        // display an error message
+        const errorData = await response.json();
+        console.error('Login failed:', errorData);
+        
+      }
+    } catch (error) {
+      console.error('Network error:', error);
+      // Handle network error
+    }
+  };
 
   return (
     <Background>
@@ -35,16 +59,16 @@ export default function LoginScreen({ navigation }) {
       <Logo />
       <Header>Welcome back.</Header>
       <TextInput
-        label="Email"
+        label="User Name"
         returnKeyType="next"
-        value={email.value}
-        onChangeText={(text) => setEmail({ value: text, error: '' })}
-        error={!!email.error}
-        errorText={email.error}
+        value={username.value}
+        onChangeText={(text) => setUsername({ value: text, error: '' })}
+        error={!!username.error}
+        errorText={username.error}
         autoCapitalize="none"
-        autoCompleteType="email"
-        textContentType="emailAddress"
-        keyboardType="email-address"
+        autoCompleteType="Username"
+        textContentType="Username"
+        keyboardType="Username"
       />
       <TextInput
         label="Password"
@@ -74,6 +98,7 @@ export default function LoginScreen({ navigation }) {
     </Background>
   )
 }
+
 
 const styles = StyleSheet.create({
   forgotPassword: {
