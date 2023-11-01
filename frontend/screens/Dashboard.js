@@ -11,8 +11,7 @@ export default function Dashboard({ navigation }) {
       <Logo />
       <Header>Let’s start</Header>
       <Paragraph>
-        Your amazing app starts here. Open you favorite code editor and start
-        editing this project.
+        WELCOME TO EDUTECH.
       </Paragraph>
       <Button
         mode="outlined"
