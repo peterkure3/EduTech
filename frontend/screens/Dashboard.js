@@ -1,20 +1,26 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Modal, FlatList } from 'react-native';
 import Background from '../components/Background';
 import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function Dashboard({ navigation }) {
+  const [languageModalVisible, setLanguageModalVisible] = React.useState(false);
+  const languages = ['English', 'Spanish', 'French', 'German', 'Chinese'];
+  
   const suggestedTeachers = [
     {name: 'John Doe', likes: 320},
     {name: 'Jane Smith', likes: 210},
     {name: 'Emily Johnson', likes: 540},
-    
   ];
 
   return (
     <Background>
       <ScrollView style={{ flex: 1 }}>
+        <TouchableOpacity style={styles.languageSelector} onPress={() => setLanguageModalVisible(true)}>
+          <Icon name="language" size={24} color="gray" />
+        </TouchableOpacity>
+        
         <View style={styles.searchContainer}>
           <Icon name="search" size={20} color="gray" />
           <TextInput 
@@ -22,9 +28,9 @@ export default function Dashboard({ navigation }) {
             placeholder="Search for courses..."
           />
         </View>
-        
+
         <Header>Homepage</Header>
-        
+
         <View style={styles.banner}>
           <Text>Dummy Banner Content</Text>
         </View>
@@ -49,6 +55,25 @@ export default function Dashboard({ navigation }) {
           ))}
         </View>
       </ScrollView>
+
+      <Modal
+        transparent={true}
+        animationType="slide"
+        visible={languageModalVisible}
+        onRequestClose={() => setLanguageModalVisible(false)}
+      >
+        <View style={styles.modalContainer}>
+          <FlatList
+            data={languages}
+            renderItem={({item}) => (
+              <TouchableOpacity style={styles.languageOption} onPress={() => setLanguageModalVisible(false)}>
+                <Text>{item}</Text>
+              </TouchableOpacity>
+            )}
+            keyExtractor={(item) => item}
+          />
+        </View>
+      </Modal>
 
       <View style={styles.navbar}>
         <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Home')}>
@@ -149,5 +174,26 @@ const styles = StyleSheet.create({
   },
   likesCount: {
     marginLeft: 5,
+  },
+  languageSelector: {
+    position: 'absolute',
+    top: 10,
+    left: 10,
+    zIndex: 10,
+  },
+  modalContainer: {
+    marginTop: 150,
+    backgroundColor: "white",
+    borderRadius: 10,
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    alignItems: 'center',
+  },
+  languageOption: {
+    padding: 15,
+    borderBottomWidth: 1,
+    borderBottomColor: 'lightgray',
+    width: '100%',
+    alignItems: 'center',
   },
 });

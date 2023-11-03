@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "fc772afc-2ead-45a8-aa13-8996fb402b44"
+      }
+    },
+    "android": {
+      "package": "com.Edutech"
+    },
+    "ios": {
+      "bundleIdentifier": "com.edutecios"
+    }
+  }
+}
