@@ -1,12 +1,45 @@
 import React from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Modal, FlatList } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Modal, FlatList, Image } from 'react-native';
 import Background from '../components/Background';
 import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+
+
 export default function Dashboard({ navigation }) {
   const [languageModalVisible, setLanguageModalVisible] = React.useState(false);
   const languages = ['English', 'Spanish', 'French', 'German', 'Chinese'];
+  const localImages = {
+    course1: require('../assets/course1.png'),
+    course2: require('../assets/course2.png'),
+    // and so on for other images
+  };
+  
+  const courses = [
+    {
+      title: 'Course 1',
+      description: 'Course Description',
+      image: localImages.course1,
+    },
+    {
+      title: 'Course 2',
+      description: 'Course Description',
+      image: localImages.course2,
+    },
+    {
+      title: 'Course 1',
+      description: 'Course Description',
+      image: localImages.course1,
+    },
+    {
+      title: 'Course 2',
+      description: 'Course Description',
+      image: localImages.course2,
+    },
+    // ...more courses
+  ];
+  
+  
   
   const suggestedTeachers = [
     {name: 'John Doe', likes: 320},
@@ -16,7 +49,7 @@ export default function Dashboard({ navigation }) {
 
   return (
     <Background>
-      <ScrollView style={{ flex: 1 }}>
+      <ScrollView style={{ flex: 1, paddingBottom: 70}}>
         <TouchableOpacity style={styles.languageSelector} onPress={() => setLanguageModalVisible(true)}>
           <Icon name="language" size={24} color="gray" />
         </TouchableOpacity>
@@ -30,19 +63,33 @@ export default function Dashboard({ navigation }) {
         </View>
 
         <Header>Homepage</Header>
+        
 
         <View style={styles.banner}>
-          <Text>Dummy Banner Content</Text>
+          <Image
+            source={require('../assets/banner1.jpg')} // Replace with your local image
+            // Or for a remote image, use: {uri: 'https://example.com/image.jpg'}
+            resizeMode="cover" // or "contain", depending on how you want to fit the image within the banner space
+            style={StyleSheet.absoluteFill} // This will make the image fill the entire banner area
+          />
+          <Text style={{ zIndex: 1 }}></Text>
         </View>
 
+
         <View style={styles.courseGrid}>
-          {Array(6).fill(null).map((_, idx) => (
+          {courses.map((course, idx) => (
             <View key={idx} style={styles.courseBox}>
-              <Text style={styles.courseBoxTitle}>Course {idx + 1}</Text>
-              <Text style={styles.courseBoxDescription}>Course Description</Text>
+              <Image
+                source={course.image}
+                style={styles.courseImage}
+              />
+              <Text style={styles.courseBoxTitle}>{course.title}</Text>
+              <Text style={styles.courseBoxDescription}>{course.description}</Text>
             </View>
           ))}
         </View>
+
+
 
         <Header>Suggested Teachers</Header>
         <View style={styles.suggestionsList}>
@@ -147,7 +194,10 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 10,
     borderRadius: 8,
+    // Add this to ensure the image is not stretched
+    overflow: 'hidden', 
   },
+  
   courseBoxTitle: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -196,4 +246,21 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
   },
+  banner: {
+    height: 200, // Adjust the height as needed
+    backgroundColor: 'lightblue',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 8,
+    marginHorizontal: 15,
+    marginBottom: 20,
+    overflow: 'hidden', // Ensures the image does not spill out of the banner's rounded corners
+  },
+  courseImage: {
+    width: '100%', // Take up all available width
+    height: 100, // Set a fixed height for images
+    borderRadius: 8, // Optional: if you want rounded corners
+  },
+  
+  
 });
