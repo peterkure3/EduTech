@@ -3,12 +3,18 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Modal,
 import Background from '../components/Background';
 import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useTranslation } from 'react-i18next';
 
 
 
 export default function Dashboard({ navigation }) {
+  const { t, i18n } = useTranslation();
   const [languageModalVisible, setLanguageModalVisible] = React.useState(false);
   const languages = ['English', 'Spanish', 'French', 'German', 'Chinese'];
+  const handleLanguageChange = (language) => {
+    i18n.changeLanguage(language);
+    setLanguageModalVisible(false);
+  };
   const localImages = {
     course1: require('../assets/course1.png'),
     course2: require('../assets/course2.png'),
