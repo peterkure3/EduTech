@@ -11,6 +11,8 @@ import {
   Dashboard,
 } from './screens'
 import Profile from './screens/Profile'
+import CoursesPage from './screens/CoursePage'
+import './core/i18n'
 
 const Stack = createStackNavigator()
 
@@ -29,6 +31,7 @@ export default function App() {
           <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
           <Stack.Screen name="Dashboard" component={Dashboard} />
           <Stack.Screen name="Profile" component={Profile} />
+          <Stack.Screen name="Courses" component={CoursesPage}/>
           <Stack.Screen
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}

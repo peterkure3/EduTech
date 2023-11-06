@@ -1,0 +1,27 @@
+{
+    "welcome_message": "Tukusanyukidde mu kusaba kwaffe!",
+    "goodbye_message": "Weebale kyalaba, tunaalabagana!",
+    "error_404": "Omupeji gw'onoonya tegulabika.",
+    "error_500": "Waliwo ensobi mu server. Tugende nate.",
+    "login": {
+      "username": "Eryanyi",
+      "password": "Ekigambo ekikuumi",
+      "button_text": "Yingira mu Sisito"
+    },
+    "menu": {
+      "home": "Ennyumba",
+      "about_us": "Kubyetuliko",
+      "contact": "Kontakiti"
+    },
+    "English": "Olungereza",
+    "Spanish": "Olesupanyoli",
+    "French": "Olufalansa",
+    "German": "Oludaaki",
+    "Luganda": "Luganda",
+    "course1Title": "Emisomo 1",
+    "course1Description": "Okunnyonnyola Kw'emisomo",
+    "course2Title": "Emisomo 2",
+    "course2Description": "Okunnyonnyola Kw'emisomo"
+    
+  }
+  

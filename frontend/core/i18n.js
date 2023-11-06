@@ -15,7 +15,7 @@ i18n
       caches: ['localStorage', 'cookie'],
     },
     backend: {
-      loadPath: '/locales/{{lng}}/{{ns}}.json', // path where resources get loaded from
+      loadPath: '/public/locales/{{lng}}/{{ns}}.json', // path where resources get loaded from
     },
     react: {
       useSuspense: false,

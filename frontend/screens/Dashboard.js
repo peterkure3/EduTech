@@ -10,7 +10,9 @@ import { useTranslation } from 'react-i18next';
 export default function Dashboard({ navigation }) {
   const { t, i18n } = useTranslation();
   const [languageModalVisible, setLanguageModalVisible] = React.useState(false);
-  const languages = ['English', 'Spanish', 'French', 'German', 'Chinese'];
+  // const languages = [t('English'), t('Spanish'), t('French'), t('German'), t('Luganda')];
+  const languages = ['en', 'es', 'fr', 'de', 'lg'];
+  
   const handleLanguageChange = (language) => {
     i18n.changeLanguage(language);
     setLanguageModalVisible(false);
@@ -23,24 +25,24 @@ export default function Dashboard({ navigation }) {
   
   const courses = [
     {
-      title: 'Course 1',
-      description: 'Course Description',
+      title: t('course1'),
+      description: t('course 1'),
       image: localImages.course1,
     },
     {
-      title: 'Course 2',
-      description: 'Course Description',
+      title: t('course2'),
+      description: t('course2'),
       image: localImages.course2,
     },
     {
-      title: 'Course 1',
-      description: 'Course Description',
+      title: t('course2'),
+      description: t('course2'),
+      image: localImages.course2,
+    },
+    {
+      title: t('course1'),
+      description: t('course1'),
       image: localImages.course1,
-    },
-    {
-      title: 'Course 2',
-      description: 'Course Description',
-      image: localImages.course2,
     },
     // ...more courses
   ];
@@ -48,9 +50,9 @@ export default function Dashboard({ navigation }) {
   
   
   const suggestedTeachers = [
-    {name: 'John Doe', likes: 320},
-    {name: 'Jane Smith', likes: 210},
-    {name: 'Emily Johnson', likes: 540},
+    { name: t('john doe'), likes: 320 },
+    { name: t('allan smith'), likes: 210 },
+    { name: t('gensi collin'), likes: 540 },
   ];
 
   return (
@@ -116,15 +118,15 @@ export default function Dashboard({ navigation }) {
         onRequestClose={() => setLanguageModalVisible(false)}
       >
         <View style={styles.modalContainer}>
-          <FlatList
-            data={languages}
-            renderItem={({item}) => (
-              <TouchableOpacity style={styles.languageOption} onPress={() => setLanguageModalVisible(false)}>
-                <Text>{item}</Text>
-              </TouchableOpacity>
-            )}
-            keyExtractor={(item) => item}
-          />
+        <FlatList
+          data={languages}
+          renderItem={({ item }) => (
+            <TouchableOpacity style={styles.languageOption} onPress={() => handleLanguageChange(item)}>
+              <Text>{item}</Text>
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item}
+        />
         </View>
       </Modal>
 
