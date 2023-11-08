@@ -12,7 +12,7 @@ import {
 } from './screens'
 import Profile from './screens/Profile'
 import CoursesPage from './screens/CoursePage'
-import './core/i18n'
+
 
 const Stack = createStackNavigator()
 

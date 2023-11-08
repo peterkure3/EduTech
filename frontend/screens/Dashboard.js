@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Modal,
 import Background from '../components/Background';
 import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import { useTranslation } from 'react-i18next';
+
 
 
 
