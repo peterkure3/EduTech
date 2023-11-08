@@ -17,5 +17,8 @@ router.get('/courses', userController.getAllCourses);
 // add courses
 router.post('/addcourses', userController.addCourse);
 
+//deleting a course
+router.delete('/courses/:courseId', userController.deleteCourse);
+
 
 module.exports = router;

@@ -74,14 +74,36 @@ async function addCourse(req, res) {
     res.status(500).json({ error: 'adding course failed' });
   }
 }
+// delete course 
+async function deleteCourse(req, res) {
+  try {
+    const { courseId } = req.params; // Assuming the course ID is sent as a URL parameter
 
+    // Input validation
+    if (!courseId) {
+      return res.status(400).json({ error: 'Course ID is required' });
+    }
+
+    // Delete the course if input is valid
+    const result = await userModel.deleteCourse(courseId);
+    if (result.deletedCount === 0) {
+      return res.status(404).json({ error: 'Course not found' });
+    }
+
+    res.status(200).json({ message: 'Course successfully deleted' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Failed to delete course' });
+  }
+}
 
 module.exports = {
   registerUser,
   getUsers,
   login,
   getAllCourses,
-  addCourse
+  addCourse,
+  deleteCourse
 };
 
 
