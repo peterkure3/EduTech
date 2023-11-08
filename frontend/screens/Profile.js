@@ -3,6 +3,14 @@ import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native
 import Background from '../components/Background';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
+const ProgressBar = ({ progress }) => {
+  return (
+    <View style={styles.progressBarContainer}>
+      <View style={[styles.progressBarFill, { width: `${progress}%` }]} />
+    </View>
+  );
+};
+
 export default function Profile({ navigation }) {
   const user = {
     name: 'John Doe',
@@ -30,18 +38,21 @@ export default function Profile({ navigation }) {
         </View>
         
         <View style={styles.coursesContainer}>
-          <Text style={styles.headerText}>Enrolled Courses:</Text>
-          <FlatList 
-            data={user.enrolledCourses}
-            renderItem={({item}) => (
-              <View style={styles.courseItem}>
+        <Text style={styles.headerText}>Enrolled Courses:</Text>
+        <FlatList
+          data={user.enrolledCourses}
+          renderItem={({ item }) => (
+            <View style={styles.courseItem}>
+              <View style={styles.courseInfo}>
                 <Text>{item.title}</Text>
                 <Text>{item.progress}% Completed</Text>
               </View>
-            )}
-            keyExtractor={(item) => item.title}
-          />
-        </View>
+              <ProgressBar progress={item.progress} />
+            </View>
+          )}
+          keyExtractor={(item) => item.title}
+        />
+      </View>
 
         <View style={styles.wishlistContainer}>
           <Text style={styles.headerText}>Wishlist:</Text>
@@ -143,5 +154,26 @@ const styles = StyleSheet.create({
   },
   navItem: {
     alignItems: 'center',
+  },
+  progressBarContainer: {
+    height: 20,
+    width: '100%',
+    backgroundColor: '#EDE7F6', // light purple color for the background
+    borderRadius: 10,
+    overflow: 'hidden',
+    marginBottom: 10,
+    borderColor: '#D1C4E9', // slightly darker purple border color
+    borderWidth: 1,
+  },
+  progressBarFill: {
+    height: '100%',
+    backgroundColor: '#7E57C2', // darker purple for the fill
+    borderRadius: 10,
+  },
+  courseInfo: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 5,
   },
 });

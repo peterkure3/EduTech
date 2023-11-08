@@ -1,5 +1,6 @@
 const pool = require('../config/db');
 
+// creating users
 async function createUser(user) {
   const query = {
     text: 'INSERT INTO users(username, email, password) VALUES($1, $2, $3) RETURNING *',
@@ -8,6 +9,7 @@ async function createUser(user) {
   const { rows } = await pool.query(query);
   return rows[0];
 }
+// getting all users
 async function getAllUsers() {
   try {
     const query = 'SELECT * FROM users';
@@ -17,7 +19,7 @@ async function getAllUsers() {
     throw error;
   }
 }
-
+// logging in
 async function loginUser(username, password) {
   try {
     const query = {
@@ -30,7 +32,33 @@ async function loginUser(username, password) {
     throw error;
   }
 }
-
+// getting all courses
+async function getAllCourses() {
+  try {
+    const query = 'SELECT * FROM courses';
+    const { rows } = await pool.query(query);
+    return rows;
+  } catch (error) {
+    throw error;
+  }
+}
+// adding courses
+async function addCourse(course) {
+  const query = {
+    text: 'INSERT INTO courses(name, description, category, level, duration, price, primary_language) VALUES($1, $2, $3, $4, $5, $6, $7) RETURNING *',
+    values: [
+      course.name, 
+      course.description, 
+      course.category, 
+      course.level, 
+      course.duration, 
+      course.price, 
+      course.primary_language
+    ],
+  };
+  const { rows } = await pool.query(query);
+  return rows[0];
+}
 // const createUser = (request, response) => {
 //   const { name, email, password } = request.body
 
@@ -42,5 +70,5 @@ async function loginUser(username, password) {
 //   })
 // }
 
-module.exports = { createUser, getAllUsers, loginUser };
+module.exports = { createUser, getAllUsers, loginUser, getAllCourses,addCourse };
 
