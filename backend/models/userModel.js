@@ -62,7 +62,7 @@ async function addCourse(course) {
 // deleting the course
 async function deleteCourse(courseId) {
   try {
-    const query = 'DELETE FROM courses WHERE id = $1 RETURNING *'; // Replace 'id' with your actual primary key column name
+    const query = 'DELETE FROM courses WHERE course_id = $1 RETURNING *'; // Replace 'id' with your actual primary key column name
     const result = await pool.query(query, [courseId]); // Execute the query with the courseId
 
     // Check if the result object is as expected
