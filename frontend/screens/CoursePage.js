@@ -1,5 +1,5 @@
-import React from 'react';
-import { View, Text, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
+import React,{ useState, useEffect }  from 'react';
+import { View, Text, StyleSheet, FlatList, TouchableOpacity,ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Background from '../components/Background'; // Assuming you have this component
 
@@ -16,22 +16,56 @@ const coursesData = [
 const CourseItem = ({ course }) => {
   return (
     <View style={styles.courseItem}>
-      <Text style={styles.courseTitle}>{course.title}</Text>
+      <Text style={styles.courseTitle}>{course.name}</Text>
       <Text>{course.description}</Text>
+      <Text>Category: {course.category}</Text>
+      <Text>Level: {course.level}</Text>
+      <Text>Duration: {course.duration}</Text>
+      <Text>Price: {course.price}</Text>
+      <Text>Language: {course.primary_language}</Text>
     </View>
   );
 };
 
+
+
+
 // CoursesPage component
 const CoursesPage = ({ navigation }) => {
+  // State to hold the courses and loading status
+const [courses, setCourses] = useState([]);
+const [isLoading, setIsLoading] = useState(false);
+
+
+  // Fetch courses when the component mounts
+  useEffect(() => {
+    const fetchCourses = async () => {
+      setIsLoading(true);
+      try {
+        const response = await fetch('https://edutech-api-av5t.onrender.com/api/users/courses'); // Replace with your API endpoint
+        const data = await response.json();
+        setCourses(data); // Set the courses state
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
   return (
     <Background>
       <View style={styles.container}>
-        <FlatList 
-          data={coursesData}
-          renderItem={({ item }) => <CourseItem course={item} />}
-          keyExtractor={(item) => item.id}
-        />
+        {isLoading ? (
+          <ActivityIndicator size="large" color="#0000ff"  />
+        ) : (
+          <FlatList 
+            data={courses}
+            renderItem={({ item }) => <CourseItem course={item} />}
+            keyExtractor={(item) => item.id ? item.id.toString() : Math.random().toString()}
+          />
+        )}
       </View>
 
 
