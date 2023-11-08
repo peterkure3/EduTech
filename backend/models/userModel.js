@@ -67,9 +67,8 @@ async function deleteCourse(courseId) {
     await client.query('BEGIN');
 
     // Delete the course by ID
-    const deleteQuery = 'DELETE FROM courses WHERE id = $1 RETURNING *';
-    const res = await client.query(deleteQuery, [courseId]);
-
+    const query = 'DELETE FROM courses WHERE course_id = $1 RETURNING *';
+    const { res } = await pool.query(query, [courseId]);
     // If no rows were returned, no course was deleted; hence, throw an error
     if (res.rowCount === 0) {
       throw new Error(`Course with ID: ${courseId} not found or already deleted`);
