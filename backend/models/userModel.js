@@ -59,6 +59,35 @@ async function addCourse(course) {
   const { rows } = await pool.query(query);
   return rows[0];
 }
+// deleting the course
+async function deleteCourse(courseId) {
+  const client = await pool.connect();
+  try {
+    // Start a transaction
+    await client.query('BEGIN');
+
+    // Delete the course by ID
+    const deleteQuery = 'DELETE FROM courses WHERE id = $1 RETURNING *';
+    const res = await client.query(deleteQuery, [courseId]);
+
+    // If no rows were returned, no course was deleted; hence, throw an error
+    if (res.rowCount === 0) {
+      throw new Error(`Course with ID: ${courseId} not found or already deleted`);
+    }
+
+    // Commit the transaction
+    await client.query('COMMIT');
+    
+    return res.rows[0]; // Return the deleted course information
+  } catch (error) {
+    // If an error occurred, rollback the transaction
+    await client.query('ROLLBACK');
+    throw error;
+  } finally {
+    // Release the client back to the pool
+    client.release();
+  }
+}
 // const createUser = (request, response) => {
 //   const { name, email, password } = request.body
 
@@ -70,5 +99,12 @@ async function addCourse(course) {
 //   })
 // }
 
-module.exports = { createUser, getAllUsers, loginUser, getAllCourses,addCourse };
+module.exports = {
+   createUser,
+   getAllUsers,
+    loginUser, 
+    getAllCourses,
+    addCourse,
+    deleteCourse  
+  };
 
