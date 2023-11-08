@@ -61,30 +61,19 @@ async function addCourse(course) {
 }
 // deleting the course
 async function deleteCourse(courseId) {
-  const client = await pool.connect();
   try {
-    // Start a transaction
-    await client.query('BEGIN');
+    const query = 'DELETE FROM courses WHERE id = $1 RETURNING *'; // Replace 'id' with your actual primary key column name
+    const result = await pool.query(query, [courseId]); // Execute the query with the courseId
 
-    // Delete the course by ID
-    const query = 'DELETE FROM courses WHERE course_id = $1 RETURNING *';
-    const { res } = await pool.query(query, [courseId]);
-    // If no rows were returned, no course was deleted; hence, throw an error
-    if (res.rowCount === 0) {
-      throw new Error(`Course with ID: ${courseId} not found or already deleted`);
+    // Check if the result object is as expected
+    if (!result || !result.rows) {
+      throw new Error('Unexpected result object');
     }
 
-    // Commit the transaction
-    await client.query('COMMIT');
-    
-    return res.rows[0]; // Return the deleted course information
+    return result; // Return the entire result object to handle it in the controller
   } catch (error) {
-    // If an error occurred, rollback the transaction
-    await client.query('ROLLBACK');
-    throw error;
-  } finally {
-    // Release the client back to the pool
-    client.release();
+    console.error('Error in deleteCourse:', error);
+    throw error; // Rethrow the error to be caught by the controller
   }
 }
 // const createUser = (request, response) => {

@@ -77,20 +77,17 @@ async function addCourse(req, res) {
 // delete course 
 async function deleteCourse(req, res) {
   try {
-    const { courseId } = req.params; // Assuming the course ID is sent as a URL parameter
-
-    // Input validation
-    if (!courseId) {
-      return res.status(400).json({ error: 'Course ID is required' });
-    }
-
-    // Delete the course if input is valid
+    const { courseId } = req.params;
     const result = await userModel.deleteCourse(courseId);
-    if (result.deletedCount === 0) {
+
+    // Check if any row was affected
+    if (result.rowCount === 0) {
+      // No row was deleted, send a 404 response
       return res.status(404).json({ error: 'Course not found' });
     }
 
-    res.status(200).json({ message: 'Course successfully deleted' });
+    // If everything went well, send a success response
+    res.status(200).json({ message: 'Course deleted successfully', courseId });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Failed to delete course' });
