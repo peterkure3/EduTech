@@ -8,15 +8,15 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 
 export default function Dashboard({ navigation }) {
-  const { t, i18n } = useTranslation();
+  // const { t, i18n } = useTranslation();
   const [languageModalVisible, setLanguageModalVisible] = React.useState(false);
-  // const languages = [t('English'), t('Spanish'), t('French'), t('German'), t('Luganda')];
-  const languages = ['en', 'es', 'fr', 'de', 'lg'];
+  const languages = [('English'), ('Spanish'), ('French'), ('German'), ('Luganda')];
+  // const languages = ['en', 'es', 'fr', 'de', 'lg'];
   
-  const handleLanguageChange = (language) => {
-    i18n.changeLanguage(language);
-    setLanguageModalVisible(false);
-  };
+  // const handleLanguageChange = (language) => {
+  //   i18n.changeLanguage(language);
+  //   setLanguageModalVisible(false);
+  // };
   const localImages = {
     course1: require('../assets/course1.png'),
     course2: require('../assets/course2.png'),
@@ -25,23 +25,23 @@ export default function Dashboard({ navigation }) {
   
   const courses = [
     {
-      title: t('course1'),
-      description: t('course 1'),
+      title: ('course1'),
+      description: ('course 1'),
       image: localImages.course1,
     },
     {
-      title: t('course2'),
-      description: t('course2'),
+      title: ('course2'),
+      description: ('course2'),
       image: localImages.course2,
     },
     {
-      title: t('course2'),
-      description: t('course2'),
+      title: ('course2'),
+      description: ('course2'),
       image: localImages.course2,
     },
     {
-      title: t('course1'),
-      description: t('course1'),
+      title: ('course1'),
+      description: ('course1'),
       image: localImages.course1,
     },
     // ...more courses
@@ -50,9 +50,9 @@ export default function Dashboard({ navigation }) {
   
   
   const suggestedTeachers = [
-    { name: t('john doe'), likes: 320 },
-    { name: t('allan smith'), likes: 210 },
-    { name: t('gensi collin'), likes: 540 },
+    { name: ('john doe'), likes: 320 },
+    { name: ('allan smith'), likes: 210 },
+    { name: ('gensi collin'), likes: 540 },
   ];
 
   return (
