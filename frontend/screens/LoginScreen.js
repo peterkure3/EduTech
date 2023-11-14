@@ -46,7 +46,7 @@ export default function LoginScreen({ navigation }) {
         console.log("Login successful");
         navigation.reset({
           index: 0,
-          routes: [{ name: 'Dashboard' }],
+          routes: [{ name: 'Admin' }],
         });
       } else if (response.status === 401) { // You can customize this status code based on your API
         // Incorrect password, update the error state
