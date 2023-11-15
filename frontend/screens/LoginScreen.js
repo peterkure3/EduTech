@@ -14,18 +14,19 @@ import { passwordValidator } from '../helpers/passwordValidator'
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState({ value: '', error: '' });
   const [password, setPassword] = useState({ value: '', error: '' });
-  const [loading, setLoading] = useState(false); // State to handle loading indicator
+  const [loadingStudent, setLoadingStudent] = useState(false);
+  const [loadingTeacher, setLoadingTeacher] = useState(false);
   const [loginError, setLoginError] = useState(''); // State to handle login error messages
 
   const onLoginPressed = async () => {
-    setLoading(true); // Start loading
+    setLoadingTeacher(true); // Start loading for teacher login
     setLoginError(''); // Clear any previous errors
     const usernameError = usernameValidator(username.value);
     const passwordError = passwordValidator(password.value);
     if (usernameError || passwordError) {
       setUsername({ ...username, error: usernameError });
       setPassword({ ...password, error: passwordError });
-      setLoading(false); // Stop loading
+      setLoadingTeacher(false); // Stop loading for teacher login at the end of the function
       return;
     }
 
@@ -39,7 +40,7 @@ export default function LoginScreen({ navigation }) {
         body: JSON.stringify({ username: username.value, password: password.value }),
       });
 
-      setLoading(false); // Stop loading
+      setLoadingTeacher(false); // Stop loading for teacher login at the end of the function
 
       if (response.ok) {
         // Login successful, navigates to the Teacher Dashboard screen
@@ -63,7 +64,7 @@ export default function LoginScreen({ navigation }) {
   };
 
   const onStudentLogin = async () => {
-    setLoading(true); // Start loading
+    setLoadingStudent(true); // Start loading for student login
     setLoginError(''); // Clear any previous errors
     const usernameError = usernameValidator(username.value);
     const passwordError = passwordValidator(password.value);
@@ -84,7 +85,7 @@ export default function LoginScreen({ navigation }) {
         body: JSON.stringify({ username: username.value, password: password.value }),
       });
 
-      setLoading(false); // Stop loading
+    setLoadingStudent(false); // Stop loading for student login at the end of the function
 
       if (response.ok) {
         // Login successful, navigates to the Student Dashboard screen
@@ -140,11 +141,11 @@ export default function LoginScreen({ navigation }) {
           <Text style={styles.forgot}>Forgot your password?</Text>
         </TouchableOpacity>
       </View>
-      <Button mode="contained" onPress={onStudentLogin} disabled={loading}>
-        {loading ? <ActivityIndicator size="small" color="#FFFFFF" /> : "Login as Student"}
+      <Button mode="contained" onPress={onStudentLogin} disabled={loadingStudent}>
+        {loadingStudent ? <ActivityIndicator size="small" color="#FFFFFF" /> : "Login as Student"}
       </Button>
-      <Button mode="contained" onPress={onLoginPressed} disabled={loading}>
-        {loading ? <ActivityIndicator size="small" color="#FFFFFF" /> : "Login As Teacher"}
+      <Button mode="contained" onPress={onLoginPressed} disabled={loadingTeacher}>
+        {loadingTeacher ? <ActivityIndicator size="small" color="#FFFFFF" /> : "Login As Teacher"}
       </Button>
       <View style={styles.row}>
         <Text>Don’t have an account? </Text>
