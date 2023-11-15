@@ -1,108 +1,167 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TextInput, ScrollView, Button, StyleSheet, FlatList, TouchableOpacity } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
-import axios from 'axios';
+import { View, Text, Button, Modal, FlatList, ScrollView, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 
 const AdminDashboard = () => {
-  const navigation = useNavigation();
-  const [courses, setCourses] = useState([]); // State variable to hold courses data
-  const [users, setUsers] = useState([]); // State variable to hold users data
+  const [users, setUsers] = useState([]);
+  const [courses, setCourses] = useState([]);
+  const [newCourseTitle, setNewCourseTitle] = useState('');
+  const [isDeleteCoursesModalVisible, setDeleteCoursesModalVisible] = useState(false);
+  const [filteredCourses, setFilteredCourses] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
 
   useEffect(() => {
-    // Fetch courses data from the API
-    axios.get('https://edutech-api-av5t.onrender.com/api/courses')
-      .then(response => {
-        setCourses(response.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    // Fetch users data from API
+    fetch('https://edutech-api-av5t.onrender.com/api/getusers')
+      .then(response => response.json())
+      .then(json => setUsers(json));
 
-    // Fetch users data from the API
-    axios.get('https://edutech-api-av5t.onrender.com/api/users')
-      .then(response => {
-        setUsers(response.data);
-      })
-      .catch(error => {
-        console.error(error);
-      });
+    // Fetch courses data from API
+    fetch('https://edutech-api-av5t.onrender.com/api/courses')
+      .then(response => response.json())
+      .then(json => setCourses(json));
   }, []);
 
-  const handlePostCourse = async () => {
-    // Implement code to handle posting a new course
+  const handleCreateCourse = async () => {
+    // Implement code to create a new course using Fetch API
+    const newCourse = {
+      title: newCourseTitle || 'New Course',
+    };
+
+    try {
+      const response = await fetch('https://edutech-api-av5t.onrender.com/api/addcourses', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(newCourse),
+      });
+
+      const createdCourse = await response.json();
+      setCourses([...courses, createdCourse]);
+
+      // Clear the input fields after creating a course
+      setNewCourseTitle('');
+    } catch (error) {
+      console.error('Failed to create course:', error);
+    }
   };
 
-  const handleDeleteCourse = async (courseId) => {
-    // Implement code to handle deleting a course
+  const handleDeleteCourses = async () => {
+    // Implement code to delete all courses using Fetch API
+    try {
+      await fetch('https://edutech-api-av5t.onrender.com/api/allcourses', {
+        method: 'DELETE',
+      });
+
+      setCourses([]);
+    } catch (error) {
+      console.error('Failed to delete courses:', error);
+    } finally {
+      // Close the modal after deletion
+      setDeleteCoursesModalVisible(false);
+    }
   };
 
-  const handleRenameCourse = async (courseId, newName) => {
-    // Implement code to handle renaming a course
-  };
 
-  const handleUpdateCourse = async (courseId, updatedData) => {
-    // Implement code to handle updating a course
-  };
-
-  const handlePostUser = async () => {
-    // Implement code to handle posting a new user
-  };
-
-  const handleDeleteUser = async (userId) => {
-    // Implement code to handle deleting a user
-  };
-
-  const handleRenameUser = async (userId, newName) => {
-    // Implement code to handle renaming a user
-  };
-
-  const handleUpdateUser = async (userId, updatedData) => {
-    // Implement code to handle updating a user
-  };
 
   const renderCourseItem = ({ item }) => {
     return (
       <TouchableOpacity style={styles.courseItem}>
         <Text style={styles.courseTitle}>{item.title}</Text>
         <View style={styles.courseActions}>
-          <Button title="Post" onPress={() => handlePostCourse(item.id)} />
           <Button title="Delete" onPress={() => handleDeleteCourse(item.id)} />
-          <Button title="Rename" onPress={() => handleRenameCourse(item.id, 'New Course Name')} />
-          <Button title="Update" onPress={() => handleUpdateCourse(item.id, { title: 'Updated Course Title' })} />
+          <Button title="Update" onPress={() => handleUpdateCourse(item.id, { description: 'Updated Description' })} />
         </View>
       </TouchableOpacity>
     );
   };
 
-  const renderUserItem = ({ item }) => {
+  const renderUserData = ({ item }) => {
     return (
-      <TouchableOpacity style={styles.userItem}>
-        <Text style={styles.userName}>{item.name}</Text>
-        <View style={styles.userActions}>
-          <Button title="Post" onPress={() => handlePostUser(item.id)} />
-          <Button title="Delete" onPress={() => handleDeleteUser(item.id)} />
-          <Button title="Rename" onPress={() => handleRenameUser(item.id, 'New User Name')} />
-          <Button title="Update" onPress={() => handleUpdateUser(item.id, { name: 'Updated User Name' })} />
-        </View>
-      </TouchableOpacity>
+      <View style={styles.userItem}>
+        <Text>{item.name}</Text>
+      </View>
     );
   };
+  const fetchCourses = async () => {
+    try {
+      const response = await fetch('https://edutech-api-av5t.onrender.com/api/courses');
+      const data = await response.json();
+      setCourses(data);
+    } catch (error) {
+      console.error('Failed to fetch courses:', error);
+    }
+  };
 
+  useEffect(() => {
+    // Fetch courses on component mount
+    fetchCourses();
+  }, []);
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.header}>Edutech Admin Dashboard</Text>
-      <Text style={styles.subHeader}>Courses</Text>
+      <Text style={styles.subHeader}>Users ({users.length})</Text>
+      {/* Use FlatList for rendering users */}
+      <FlatList
+        data={users}
+        renderItem={renderUserData}
+        keyExtractor={(item) => item.id.toString()}
+      />
+
+      <Text style={styles.subHeader}>Available Courses ({courses.length})</Text>
+      
+      {/* Button to open the modal */}
+      <Button title="Delete Courses" onPress={() => setDeleteCoursesModalVisible(true)} />
+
+      {/* Modal component for confirmation */}
+      <Modal
+        visible={isDeleteCoursesModalVisible}
+        transparent={true}
+        animationType="slide"
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalText}>Are you sure you want to delete all courses?</Text>
+            <Button title="Yes, Delete All" onPress={handleDeleteCourses} />
+            <Button title="Cancel" onPress={() => setDeleteCoursesModalVisible(false)} />
+          </View>
+        </View>
+      </Modal>
+
+      <Text style={styles.subHeader}>Create new course</Text>
+      <View style={styles.addCourseContainer}>
+        <TextInput
+          style={styles.input}
+          placeholder="Course Title"
+          value={newCourseTitle}
+          onChangeText={text => setNewCourseTitle(text)}
+        />
+        <Button title="Create Course" onPress={handleCreateCourse} />
+      </View>
+
+      {/* Use FlatList for rendering courses */}
       <FlatList
         data={courses}
         renderItem={renderCourseItem}
-        keyExtractor={(item) => item.id}
+        keyExtractor={(item) => item.id.toString()}
       />
-      <Text style={styles.subHeader}>Users</Text>
+      <View>
+      <Text style={styles.subHeader}>Course List</Text>
+      <Button title="Get Courses" onPress={fetchCourses} />
+
+      {/* Display the list of courses */}
       <FlatList
-        data={users}
-        renderItem={renderUserItem}
-        keyExtractor={(item) => item.id}
+        data={courses}
+        renderItem={({ item }) => (
+          <View style={styles.courseItem}>
+            <Text style={styles.courseTitle}>{item.title}</Text>
+            {/* Add any other course details you want to display */}
+          </View>
+        )}
+        keyExtractor={(item) => item.id.toString()}
       />
+      </View>
     </ScrollView>
   );
 };
@@ -110,36 +169,19 @@ const AdminDashboard = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
-    backgroundColor: 'white', // Set the background color to white
+    paddingTop: 50,
+    paddingHorizontal: 20,
+    paddingBottom: 20
   },
   header: {
     fontSize: 24,
     fontWeight: 'bold',
-    marginBottom: 20,
-    color: 'purple', // Set the text color to purple
+    marginBottom: 10,
   },
   subHeader: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
-    color: 'purple', // Set the text color to purple
-  },
-  courseItem: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    marginBottom: 10,
-    padding: 10,
-    backgroundColor: 'purple', // Set the background color to purple
-    borderRadius: 5,
-  },
-  courseTitle: {
-    fontSize: 18,
-    color: 'white', // Set the text color to white
-  },
-  courseActions: {
-    flexDirection: 'row',
+    marginVertical: 10,
   },
   userItem: {
     flexDirection: 'row',
@@ -147,16 +189,64 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginBottom: 10,
     padding: 10,
-    backgroundColor: 'purple', // Set the background color to purple
+    backgroundColor: '#eee',
     borderRadius: 5,
   },
-  userName: {
-    fontSize: 18,
-    color: 'white', // Set the text color to white
+  courseItem: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: '#eee',
+    borderRadius: 5,
   },
-  userActions: {
+  courseTitle: {
+    fontSize: 18,
+  },
+  courseActions: {
     flexDirection: 'row',
   },
+  addCourseContainer: {
+    marginBottom: 10,
+  },
+  input: {
+    height: 40,
+    borderColor: 'gray',
+    borderWidth: 1,
+    marginBottom: 10,
+    padding: 10,
+  },
+  searchContainer: {
+    flexDirection: 'row',
+    marginBottom: 10,
+  },
+  searchInput: {
+    flex: 1,
+    marginRight: 10,
+    padding: 8,
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 5,
+  },
+  selectedCourseItem: {
+    backgroundColor: 'lightblue',
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalContent: {
+    backgroundColor: 'white',
+    padding: 20,
+    borderRadius: 10,
+    elevation: 5,
+  },
+  modalText: {
+    fontSize: 18,
+    marginBottom: 10,
+  },
 });
-  
-  export default AdminDashboard;
+
+export default AdminDashboard;
