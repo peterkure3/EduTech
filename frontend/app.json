@@ -10,6 +10,7 @@
     },
     "ios": {
       "bundleIdentifier": "com.edutecios"
-    }
+    },
+    "owner": "edutechgroup"
   }
 }
