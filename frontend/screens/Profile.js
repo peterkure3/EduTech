@@ -22,10 +22,18 @@ export default function Profile({ navigation }) {
     wishlist: ['Science Advanced', 'Programming Basics']
   };
 
+  const handleLogout = () => {
+    // Placeholder logic for handling logout, you can navigate to the login screen or perform other logout actions
+    console.log('User logged out');
+  };
+
   return (
     <Background>
-      <View style={styles.profileContainer}>
-        
+       <View style={styles.profileContainer}>
+        <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
+          <Icon name="exit-to-app" size={25} color="black" />
+        </TouchableOpacity>
+
         <View style={styles.profileImage}>
           <Icon name="person" size={70} color="gray" />
         </View>
@@ -175,5 +183,11 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     marginBottom: 5,
+  },
+  logoutButton: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+    zIndex: 1, // Ensure the button is above other elements
   },
 });
