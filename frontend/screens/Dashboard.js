@@ -25,23 +25,23 @@ export default function Dashboard({ navigation }) {
   
   const courses = [
     {
-      title: ('course1'),
-      description: ('course 1'),
+      title: ('Programming'),
+      description: ('basic structure'),
       image: localImages.course1,
     },
     {
-      title: ('course2'),
-      description: ('course2'),
+      title: ('Geography'),
+      description: ('Africa'),
       image: localImages.course2,
     },
     {
-      title: ('course2'),
-      description: ('course2'),
+      title: ('Science'),
+      description: ('Body structure'),
       image: localImages.course2,
     },
     {
-      title: ('course1'),
-      description: ('course1'),
+      title: ('History'),
+      description: ('Rest of the world'),
       image: localImages.course1,
     },
     // ...more courses

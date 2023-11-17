@@ -71,12 +71,12 @@ export default function TeacherDashboard({ navigation }) {
       </View>
 
       <View style={styles.navbar}>
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Dashboard')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('')}>
           <Icon name="home" size={25} color="gray" />
           <Text>Home</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Profile')}>
+        <TouchableOpacity style={styles.navItem} onPress={() => navigation.navigate('Admin')}>
           <Icon name="person" size={25} color="gray" />
           <Text>Profile</Text>
         </TouchableOpacity>
