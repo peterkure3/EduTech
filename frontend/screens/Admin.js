@@ -12,12 +12,12 @@ const AdminDashboard = () => {
 
   useEffect(() => {
     // Fetch users data from API
-    fetch('https://edutech-api-av5t.onrender.com/api/getusers')
+    fetch('https://edutech-api-av5t.onrender.com/api/users/getusers')
       .then(response => response.json())
       .then(json => setUsers(json));
 
     // Fetch courses data from API
-    fetch('https://edutech-api-av5t.onrender.com/api/courses')
+    fetch('https://edutech-api-av5t.onrender.com/api/users/courses')
       .then(response => response.json())
       .then(json => setCourses(json));
   }, []);
@@ -29,7 +29,7 @@ const AdminDashboard = () => {
     };
 
     try {
-      const response = await fetch('https://edutech-api-av5t.onrender.com/api/addcourses', {
+      const response = await fetch('https://edutech-api-av5t.onrender.com/api/users/addcourses', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -50,7 +50,7 @@ const AdminDashboard = () => {
   const handleDeleteCourses = async () => {
     // Implement code to delete all courses using Fetch API
     try {
-      await fetch('https://edutech-api-av5t.onrender.com/api/allcourses', {
+      await fetch('https://edutech-api-av5t.onrender.com/api/users/courses', {
         method: 'DELETE',
       });
 
@@ -86,7 +86,7 @@ const AdminDashboard = () => {
   };
   const fetchCourses = async () => {
     try {
-      const response = await fetch('https://edutech-api-av5t.onrender.com/api/courses');
+      const response = await fetch('https://edutech-api-av5t.onrender.com/api/users/courses');
       const data = await response.json();
       setCourses(data);
     } catch (error) {
