@@ -24,6 +24,7 @@ export default function Profile({ navigation }) {
 
   const handleLogout = () => {
     // Placeholder logic for handling logout, you can navigate to the login screen or perform other logout actions
+    navigation.navigate('LoginScreen');
     console.log('User logged out');
   };
 
