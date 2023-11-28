@@ -1,4 +1,6 @@
 const userModel = require('../models/userModel');
+const jwt = require('jsonwebtoken');
+const secretKey = 'your-secret-key'; // Replace with a strong secret key
 
 async function registerUser(req, res) {
   try {
@@ -36,7 +38,11 @@ async function login(req, res) {
   try {
     const user = await userModel.loginUser(username, password);
     if (user) {
-      res.status(200).json(user);
+      // Generate JWT token
+      const token = jwt.sign({ username: user.username }, secretKey);
+
+      // Return the token along with user information
+      res.status(200).json({ user, token });
     } else {
       res.status(401).json({ error: 'Invalid username or password' });
     }
@@ -45,6 +51,7 @@ async function login(req, res) {
     res.status(500).json({ error: 'Login failed' });
   }
 }
+
 async function getAllCourses(req, res) {
   try {
     const users = await userModel.getAllCourses(); // Define this function in your userModel

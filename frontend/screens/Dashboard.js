@@ -46,6 +46,12 @@ export default function Dashboard({ navigation }) {
     },
     // ...more courses
   ];
+
+  const handleCoursePress = (course) => {
+    // You can use navigation.navigate to navigate to another page
+    // Replace 'CourseDetails' with the name of the screen you want to navigate to
+    navigation.navigate('CourseDetails', { course });
+  };
   
   
   
@@ -117,16 +123,19 @@ export default function Dashboard({ navigation }) {
         visible={languageModalVisible}
         onRequestClose={() => setLanguageModalVisible(false)}
       >
-        <View style={styles.modalContainer}>
-        <FlatList
-          data={languages}
-          renderItem={({ item }) => (
-            <TouchableOpacity style={styles.languageOption} onPress={() => handleLanguageChange(item)}>
-              <Text>{item}</Text>
+        <View style={styles.courseGrid}>
+          {courses.map((course, idx) => (
+            <TouchableOpacity key={idx} onPress={() => handleCoursePress(course)}>
+              <View style={styles.courseBox}>
+                <Image
+                  source={course.image}
+                  style={styles.courseImage}
+                />
+                <Text style={styles.courseBoxTitle}>{course.title}</Text>
+                <Text style={styles.courseBoxDescription}>{course.description}</Text>
+              </View>
             </TouchableOpacity>
-          )}
-          keyExtractor={(item) => item}
-        />
+          ))}
         </View>
       </Modal>
 
