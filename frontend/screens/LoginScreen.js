@@ -88,7 +88,7 @@ export default function LoginScreen({ navigation }) {
     setLoadingStudent(false); // Stop loading for student login at the end of the function
 
       if (response.ok) {
-        // Login successful, navigates to the Student Dashboard screen
+        // Login successful, navigates to the Student Dashboard screen index
         console.log("Login successful");
         navigation.reset({
           index: 0,
