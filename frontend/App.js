@@ -13,6 +13,7 @@ import {
 import Profile from './screens/Profile'
 import CoursesPage from './screens/CoursePage'
 import AdminDashboard from './screens/Admin'
+import CourseDetails from './screens/courseDetails'
 
 
 const Stack = createStackNavigator()
@@ -34,6 +35,7 @@ export default function App() {
           <Stack.Screen name="Profile" component={Profile} />
           <Stack.Screen name="Courses" component={CoursesPage}/>
           <Stack.Screen name="Admin" component={AdminDashboard}/>
+          <Stack.Screen name="CourseDetails" component={CourseDetails} />
           <Stack.Screen
             name="ResetPasswordScreen"
             component={ResetPasswordScreen}

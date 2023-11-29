@@ -48,8 +48,7 @@ export default function Dashboard({ navigation }) {
   ];
 
   const handleCoursePress = (course) => {
-    // You can use navigation.navigate to navigate to another page
-    // Replace 'CourseDetails' with the name of the screen you want to navigate to
+    // Use navigation.navigate to navigate to the CourseDetails screen
     navigation.navigate('CourseDetails', { course });
   };
   

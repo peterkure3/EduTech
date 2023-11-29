@@ -10,6 +10,9 @@ import BackButton from '../components/BackButton'
 import { theme } from '../core/theme'
 import { usernameValidator } from '../helpers/nameValidator'
 import { passwordValidator } from '../helpers/passwordValidator'
+// import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function LoginScreen({ navigation }) {
   const [username, setUsername] = useState({ value: '', error: '' });
@@ -43,11 +46,18 @@ export default function LoginScreen({ navigation }) {
       setLoadingTeacher(false); // Stop loading for teacher login at the end of the function
 
       if (response.ok) {
-        // Login successful, navigates to the Teacher Dashboard screen
-        console.log("Login successful");
+        const data = await response.json();
+  
+        // Assuming your JWT token is in the 'token' field of the response
+        const token = data.token;
+  
+        // Store the token securely using AsyncStorage
+        await AsyncStorage.setItem('token', token);
+  
+        // Navigate to the respective dashboard screen
         navigation.reset({
           index: 0,
-          routes: [{ name: 'Admin' }],
+          routes: [{ name: navigationRoute }],
         });
       } else if (response.status === 401) { // You can customize this status code based on your API
         // Incorrect password, update the error state
@@ -84,6 +94,11 @@ export default function LoginScreen({ navigation }) {
         },
         body: JSON.stringify({ username: username.value, password: password.value }),
       });
+      const token = data.token;
+      await AsyncStorage.setItem('token', token);
+      console.log('API Response:', data); // Log the entire API response
+      console.log('Token:', token); // Log the extracted token
+
 
     setLoadingStudent(false); // Stop loading for student login at the end of the function
 
@@ -93,6 +108,7 @@ export default function LoginScreen({ navigation }) {
         navigation.reset({
           index: 0,
           routes: [{ name: 'Dashboard' }],
+          
         });
       } else if (response.status === 401) { // You can customize this status code based on your API
         // Incorrect password, update the error state

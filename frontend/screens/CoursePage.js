@@ -2,6 +2,9 @@ import React,{ useState, useEffect }  from 'react';
 import { View, Text, StyleSheet, FlatList, TouchableOpacity,ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Background from '../components/Background'; // Assuming you have this component
+import CourseDetails from './courseDetails';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 // Mock data for courses
 const coursesData = [
@@ -27,7 +30,9 @@ const CourseItem = ({ course }) => {
   );
 };
 
-
+const handleCoursePress = (course) => {
+  navigation.navigate('CourseDetails', { course });
+};
 
 
 // CoursesPage component
@@ -42,27 +47,48 @@ const [isLoading, setIsLoading] = useState(false);
     const fetchCourses = async () => {
       setIsLoading(true);
       try {
-        const response = await fetch('https://edutech-api-av5t.onrender.com/api/users/courses'); // Replace with your API endpoint
-        const data = await response.json();
-        setCourses(data); // Set the courses state
+        // Retrieve the token from AsyncStorage
+        const token = await AsyncStorage.getItem('token');
+        console.log('Token:', token); // Log the token
+  
+        // Make the request with the token in the headers
+        const response = await fetch('https://edutech-api-av5t.onrender.com/api/users/courses', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json',
+          },
+        });
+  
+        if (response.ok) {
+          const data = await response.json();
+          setCourses(data);
+        } else {
+          console.error('Error fetching courses:', response.status);
+        }
       } catch (error) {
-        console.error(error);
+        console.error('Error fetching courses:', error);
       } finally {
         setIsLoading(false);
       }
     };
-
+  
     fetchCourses();
   }, []);
+  
+  
   return (
     <Background>
       <View style={styles.container}>
         {isLoading ? (
-          <ActivityIndicator size="large" color="#0000ff"  />
+          <ActivityIndicator size="large" color="#0000ff" />
         ) : (
-          <FlatList 
+          <FlatList
             data={courses}
-            renderItem={({ item }) => <CourseItem course={item} />}
+            renderItem={({ item }) => (
+              <TouchableOpacity onPress={() => handleCoursePress(item)}>
+                <CourseItem course={item} />
+              </TouchableOpacity>
+            )}
             keyExtractor={(item) => item.id ? item.id.toString() : Math.random().toString()}
           />
         )}
