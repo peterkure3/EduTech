@@ -13,6 +13,8 @@ import {
 import Profile from './screens/Profile'
 import CoursesPage from './screens/CoursePage'
 import AdminDashboard from './screens/Admin'
+import './i18n';
+
 
 
 const Stack = createStackNavigator()

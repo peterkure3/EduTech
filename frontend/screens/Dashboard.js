@@ -3,20 +3,24 @@ import { View, Text, StyleSheet, TouchableOpacity, ScrollView, TextInput, Modal,
 import Background from '../components/Background';
 import Header from '../components/Header';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import { useTranslation } from 'react-i18next';
+
 
 
 
 
 export default function Dashboard({ navigation }) {
-  // const { t, i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const [languageModalVisible, setLanguageModalVisible] = React.useState(false);
-  const languages = [('Kiswahili'), ('Lutoro'), ('French'), ('Chinese'), ('Luganda')];
-  // const languages = ['en', 'es', 'fr', 'de', 'lg'];
+  // const languages = [('Kiswahili'), ('Lutoro'), ('French'), ('Chinese'), ('Luganda')];
+  const languages = ['en', 'es', 'fr', 'de', 'lg'];
   
-  // const handleLanguageChange = (language) => {
-  //   i18n.changeLanguage(language);
-  //   setLanguageModalVisible(false);
-  // };
+  const handleLanguageChange = (language) => {
+    i18n.changeLanguage(language);
+    setLanguageModalVisible(false);
+  };
+  
+  
   const localImages = {
     course1: require('../assets/course1.png'),
     course2: require('../assets/course2.png'),
@@ -64,15 +68,22 @@ export default function Dashboard({ navigation }) {
   return (
     <Background>
       <ScrollView style={{ flex: 1, paddingBottom: 70}}>
-        <TouchableOpacity style={styles.languageSelector} onPress={() => setLanguageModalVisible(true)}>
-          <Icon name="language" size={24} color="gray" />
-        </TouchableOpacity>
+      <TouchableOpacity style={styles.languageSelector} onPress={() => setLanguageModalVisible(true)}>
+        <Icon name="language" size={24} color="gray" />
+      </TouchableOpacity>
+      {/* <Modal
+        transparent={true}
+        animationType="slide"
+        visible={languageModalVisible}
+        onRequestClose={() => setLanguageModalVisible(false)}
+      ></Modal> */}
+
         
         <View style={styles.searchContainer}>
           <Icon name="search" size={20} color="gray" />
           <TextInput 
             style={styles.searchBar}
-            placeholder="Search for courses..."
+            placeholder= {t("Search for courses...")}
           />
         </View>
 
