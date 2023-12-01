@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 export default function Dashboard({ navigation }) {
   // const { t, i18n } = useTranslation();
   const [languageModalVisible, setLanguageModalVisible] = React.useState(false);
-  const languages = [('Acholi'), ('Lutoro'), ('Lusoga'), ('Lugubara'), ('Luganda')];
+  const languages = [('Kiswahili'), ('Lutoro'), ('French'), ('Chinese'), ('Luganda')];
   // const languages = ['en', 'es', 'fr', 'de', 'lg'];
   
   // const handleLanguageChange = (language) => {
@@ -25,8 +25,8 @@ export default function Dashboard({ navigation }) {
   
   const courses = [
     {
-      title: ('Programming'),
-      description: ('basic structure'),
+      title: ('Political Studies'),
+      description: ('Entire world'),
       image: localImages.course1,
     },
     {
