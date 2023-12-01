@@ -68,15 +68,9 @@ export default function Dashboard({ navigation }) {
   return (
     <Background>
       <ScrollView style={{ flex: 1, paddingBottom: 70}}>
-      <TouchableOpacity style={styles.languageSelector} onPress={() => setLanguageModalVisible(true)}>
+      <TouchableOpacity style={styles.languageSelector} onPress={() => handleLanguageChange("lg")}>
         <Icon name="language" size={24} color="gray" />
       </TouchableOpacity>
-      {/* <Modal
-        transparent={true}
-        animationType="slide"
-        visible={languageModalVisible}
-        onRequestClose={() => setLanguageModalVisible(false)}
-      ></Modal> */}
 
         
         <View style={styles.searchContainer}>
